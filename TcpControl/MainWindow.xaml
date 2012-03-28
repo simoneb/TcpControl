@@ -1,0 +1,61 @@
+﻿<Window x:Class="TcpControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:TcpControl="clr-namespace:TcpControl" Title="TcpControl" Height="350" Width="499" DataContext="{DynamicResource ViewModel}" ResizeMode="NoResize">
+  <Window.Resources>
+    <TcpControl:MainWindowViewModel x:Key="ViewModel" />
+    <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextAlignment" Value="Right" />
+        <Setter Property="Padding" Value="5,0"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    </Window.Resources>
+  <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="5"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="5"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="5"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Label>Inbound port:</Label>
+                <TextBox Width="60" Text="{Binding InboundPort}" IsEnabled="{Binding IsStopped}"></TextBox>
+                <Label>Outbound host:</Label>
+                <TextBox Width="100" Text="{Binding OutboundHost}" IsEnabled="{Binding IsStopped}"></TextBox>
+                <Label>Outbound port:</Label>
+                <TextBox Width="60" Text="{Binding OutboundPort}" IsEnabled="{Binding IsStopped}"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <Label>Inbound to outbound delay (ms):</Label>
+                <TextBox Width="50" Text="{Binding InboundToOutboundDelay}" IsEnabled="{Binding IsStopped}"></TextBox>
+                <Label>Outbound to inbound delay (ms):</Label>
+                <TextBox Width="50" Text="{Binding OutboundToInboundDelay}" IsEnabled="{Binding IsStopped}"></TextBox>
+            </StackPanel>
+            <StackPanel Margin="0 0 5 0" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="50" Command="{Binding StartStop}" Content="{Binding ButtonText}"></Button>
+            </StackPanel>
+        </Grid>
+        <Separator Grid.Row="1"></Separator>
+        <Grid Grid.Row="2">
+            <DataGrid ItemsSource="{Binding Proxies}" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserSortColumns="False" HeadersVisibility="Column">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Status" Width="60" Binding="{Binding Status}" ElementStyle="{StaticResource RightAlignStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="Auto" Header="Remote endpoint" Binding="{Binding RemoteEndpoint}" ElementStyle="{StaticResource RightAlignStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="In read" Binding="{Binding InboundRead}" ElementStyle="{StaticResource RightAlignStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Out write" Binding="{Binding OutboundWritten}" ElementStyle="{StaticResource RightAlignStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Out read" Binding="{Binding OutboundRead}" ElementStyle="{StaticResource RightAlignStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="In write" Binding="{Binding OutboundRead}" ElementStyle="{StaticResource RightAlignStyle}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
