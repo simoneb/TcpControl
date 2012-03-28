@@ -35,10 +35,12 @@
                 <TextBox Width="60" Text="{Binding OutboundPort}" IsEnabled="{Binding IsStopped}"></TextBox>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <Label>Inbound to outbound delay (ms):</Label>
-                <TextBox Width="50" Text="{Binding InboundToOutboundDelay}" IsEnabled="{Binding IsStopped}"></TextBox>
-                <Label>Outbound to inbound delay (ms):</Label>
-                <TextBox Width="50" Text="{Binding OutboundToInboundDelay}" IsEnabled="{Binding IsStopped}"></TextBox>
+                <Label>Incoming delay (ms):</Label>
+                <TextBox Width="40" Text="{Binding InboundToOutboundDelay}" IsEnabled="{Binding IsStopped}"></TextBox>
+                <Label>Outgoing delay (ms):</Label>
+                <TextBox Width="40" Text="{Binding OutboundToInboundDelay}" IsEnabled="{Binding IsStopped}"></TextBox>
+                <Label>Buffer size (Bytes):</Label>
+                <TextBox Width="60" Text="{Binding BufferSize}" IsEnabled="{Binding IsStopped}"></TextBox>
             </StackPanel>
             <StackPanel Margin="0 0 5 0" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Width="50" Command="{Binding StartStop}" Content="{Binding ButtonText}"></Button>

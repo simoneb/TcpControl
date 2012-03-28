@@ -76,7 +76,7 @@ namespace TcpControl
         private void DoStartStop()
         {
             if (IsStopped)
-                tcpServer.Start(InboundPort, OutboundHost, OutboundPort, InboundToOutboundDelay, OutboundToInboundDelay);
+                tcpServer.Start(InboundPort, OutboundHost, OutboundPort, InboundToOutboundDelay, OutboundToInboundDelay, BufferSize);
             else
                 tcpServer.Stop();
 
@@ -151,6 +151,16 @@ namespace TcpControl
             {
                 Settings.Default.OutboundToInboundDelay = value;
                 NotifyPropertyChanged(() => OutboundToInboundDelay);
+            }
+        }
+
+        public int BufferSize
+        {
+            get { return Settings.Default.BufferSize; }
+            set
+            {
+                Settings.Default.BufferSize = value;
+                NotifyPropertyChanged(() => BufferSize);
             }
         }
     }

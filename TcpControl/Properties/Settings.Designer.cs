@@ -82,5 +82,17 @@ namespace TcpControl.Properties {
                 this["OutboundToInboundDelay"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4096")]
+        public int BufferSize {
+            get {
+                return ((int)(this["BufferSize"]));
+            }
+            set {
+                this["BufferSize"] = value;
+            }
+        }
     }
 }

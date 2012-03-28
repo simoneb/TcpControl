@@ -13,6 +13,7 @@ namespace TcpControl
         private readonly int outboundPort;
         private readonly int inboundToOutboundDelay;
         private readonly int outboundToInboundDelay;
+        private readonly int bufferSize;
         private readonly string outboundHost;
         private Thread inboundToOutbound;
         private Thread outboundToInbound;
@@ -28,7 +29,7 @@ namespace TcpControl
         public event Action<int> OutboundWrittenChanged = delegate { };
         public event Action<int> InboundWrittenChanged = delegate { };
 
-        public TcpProxy(TcpClient inbound, string outboundHost, int outboundPort, int inboundToOutboundDelay, int outboundToInboundDelay)
+        public TcpProxy(TcpClient inbound, string outboundHost, int outboundPort, int inboundToOutboundDelay, int outboundToInboundDelay, int bufferSize)
         {
             this.inbound = inbound;
             outbound = new TcpClient();
@@ -37,6 +38,7 @@ namespace TcpControl
             this.outboundPort = outboundPort;
             this.inboundToOutboundDelay = inboundToOutboundDelay;
             this.outboundToInboundDelay = outboundToInboundDelay;
+            this.bufferSize = bufferSize;
         }
 
         public IPEndPoint RemoteEndpoint
@@ -109,7 +111,7 @@ namespace TcpControl
                 var sourceStream = source.GetStream();
                 var destinationStream = destination.GetStream();
 
-                var buffer = new byte[4096];
+                var buffer = new byte[bufferSize];
 
                 while (true)
                 {

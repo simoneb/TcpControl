@@ -17,13 +17,14 @@ namespace TcpControl
         private int status = -1;
         private int inboundToOutboundDelay;
         private int outboundToInboundDelay;
+        private int bufferSize;
 
         public event Action<TcpProxy> ProxyAdded = delegate { };
         public event Action<TcpProxy> ProxyRemoved = delegate { };
         public event Action Started = delegate { };
         public event Action Stopped = delegate { };
 
-        public void Start(int inboundPort, string outboundHost, int outboundPort, int inboundToOutboundDelay, int outboundToInboundDelay)
+        public void Start(int inboundPort, string outboundHost, int outboundPort, int inboundToOutboundDelay, int outboundToInboundDelay, int bufferSize)
         {
             if (status == 1)
                 return;
@@ -32,6 +33,7 @@ namespace TcpControl
             this.outboundPort = outboundPort;
             this.inboundToOutboundDelay = inboundToOutboundDelay;
             this.outboundToInboundDelay = outboundToInboundDelay;
+            this.bufferSize = bufferSize;
 
             listener = new TcpListener(new IPEndPoint(IPAddress.Any, inboundPort));
             listener.Start();
@@ -58,7 +60,7 @@ namespace TcpControl
                 throw;
             }
 
-            var proxy = new TcpProxy(inbound, outboundHost, outboundPort, inboundToOutboundDelay, outboundToInboundDelay);
+            var proxy = new TcpProxy(inbound, outboundHost, outboundPort, inboundToOutboundDelay, outboundToInboundDelay, bufferSize);
             proxy.Connect();
 
             proxy.Closed += ProxyClosed;
